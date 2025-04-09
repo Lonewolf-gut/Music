@@ -32,11 +32,11 @@ const App = () => {
   };
 
   return (
-    <div className="container mx-auto p-4">
+    <div className={`container mx-auto p-4 ${theme ==='dark' ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
         {/* Dark mode toggle button */}
         <button
           onClick={toggleTheme}
-          className="mb-4 p-2 bg-gray-300 rounded-full hover:bg-gray-400"
+          className={`mb-4 p-2 ${theme === 'dark' ? 'bg-gray-600' : 'bg-gray-300'} rounded-full hover:${theme === 'dark' ? 'bg-gray-500' : 'bg-gray-400'}`}
         >
           {theme === 'light' ? 'Switch to Dark Mode' : 'Switch to Light Mode'}
         </button>
