@@ -40,9 +40,7 @@ const MusicPlayer = ({ track }) => {
     return () => clearInterval(interval);
   }, []);
 
-  // const skipTrack = () => {
-  // skipping next track functionality)
-  };
+
 
   return (
     <div className="flex flex-col items-center bg-gray-800 text-white p-4 rounded-lg">

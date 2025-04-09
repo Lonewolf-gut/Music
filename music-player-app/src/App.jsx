@@ -23,11 +23,12 @@ const App = () => {
 
     //Fetch tracks based on search//
   const handleSearch = async (query) => {
+    if (!query) return; // Prevention of an empty search request
     const data = await searchTracks(query);
-    setTracks(data.data); // Set the tracks
+    setTracks(data.data); // fetch tracks into state
   };
 
-    // Apply the theme to the body (or main wrapper) when theme changes
+    // Apply the theme to the body when theme changes
     useEffect(() => {
       if (theme === 'dark') {
         document.documentElement.classList.add('dark');
@@ -40,8 +41,6 @@ const App = () => {
     <Router>
       <div className={`container mx-auto p-4 ${theme ==='dark' ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
         
-        
-          
           {/* Dark mode toggle button */}
         <button
           onClick={toggleTheme}

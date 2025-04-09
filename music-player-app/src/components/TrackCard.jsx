@@ -22,6 +22,12 @@ const TrackCard = ({ track, onPlay }) => {
       >
         Play
       </Link>
+      {/* <button
+        onClick={() => onPlay(track)}
+        className="bg-blue-500 text-white p-2 rounded dark:bg-blue-600"
+      >
+        Play
+      </button> */}
     </div>
   );
 };
