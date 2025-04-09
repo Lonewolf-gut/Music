@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import SearchBar from './components/SearchBar';
 import TrackCard from './components/TrackCard';
 import MusicPlayer from './components/MusicPlayer';
+import Sidebar from './components/Sidebar';
 import './App.css'; //styles loaded for dark and light modes
+import {searchTracks} from './utils/api';
 
 const App = () => {
    // State to manage the theme
@@ -17,6 +20,13 @@ const App = () => {
       localStorage.setItem('theme', newTheme); // Store the user's theme preference in local storage
     };
   
+
+    //Fetch tracks based on search//
+  const handleSearch = async (query) => {
+    const data = await searchTracks(query);
+    setTracks(data.data); // Set the tracks
+  };
+
     // Apply the theme to the body (or main wrapper) when theme changes
     useEffect(() => {
       if (theme === 'dark') {
@@ -26,34 +36,42 @@ const App = () => {
       }
     }, [theme]);
 
-  const handleSearch = async (query) => {
-    const data = await searchTracks(query);
-    setTracks(data.data); // Set the tracks
-  };
-
   return (
-    <div className={`container mx-auto p-4 ${theme ==='dark' ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
-        {/* Dark mode toggle button */}
+    <Router>
+      <div className={`container mx-auto p-4 ${theme ==='dark' ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
+        
+        
+          
+          {/* Dark mode toggle button */}
         <button
           onClick={toggleTheme}
           className={`mb-4 p-2 ${theme === 'dark' ? 'bg-gray-600' : 'bg-gray-300'} rounded-full hover:${theme === 'dark' ? 'bg-gray-500' : 'bg-gray-400'}`}
         >
           {theme === 'light' ? 'Switch to Dark Mode' : 'Switch to Light Mode'}
         </button>
+        <Sidebar toggleTheme={toggleTheme} theme={theme} />
 
-        <SearchBar onSearch={handleSearch} />
-        <div className="mt-4">
-          {tracks.length > 0 ? (
-            tracks.map((track) => (
-              <TrackCard key={track.id} track={track} onPlay={setCurrentTrack} />
-            ))
-          ) : (
-            <p>No tracks found. Try searching again.</p>
-          )}
-        </div>
-
-      {currentTrack && <MusicPlayer track={currentTrack} />}
-    </div>
+        <Switch>
+          <Route path="/" exact>
+            <SearchBar onSearch={handleSearch} />
+            <div className="mt-4">
+              {tracks.length > 0 ? (
+                tracks.map((track) => (
+                  <TrackCard key={track.id} track={track} onPlay={setCurrentTrack} />
+                ))
+              ) : (
+                <p>No tracks found. Try searching again.</p>
+              )}
+            </div>
+          </Route>
+          {currentTrack && <MusicPlayer track={currentTrack} />}
+          <Route path="/now-playing">
+            <MusicPlayer track={currentTrack} />
+          </Route>
+        </Switch>
+      
+      </div>
+    </Router>
   );
 };
 

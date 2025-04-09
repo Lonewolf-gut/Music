@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 
 const TrackCard = ({ track, onPlay }) => {
   return (
@@ -13,12 +14,14 @@ const TrackCard = ({ track, onPlay }) => {
         <p className="text-gray-600 dark:text-gray-300">{track.artist.name}</p>
         <p className="text-sm text-gray-500 dark:text-gray-400">{track.album.title}</p>
       </div>
-      <button 
+
+      <Link
+        to="/now-playing"
+        className="bg-blue-500 text-white p-2 rounded"
         onClick={() => onPlay(track)}
-        className="bg-blue-500 text-white p-2 rounded dark:bg-blue-600"
       >
         Play
-      </button>
+      </Link>
     </div>
   );
 };
