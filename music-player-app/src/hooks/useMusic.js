@@ -1,11 +1,15 @@
+import { searchTracks } from "../utils/api";
 
-
-const searchTracks = async (query) => {
-    try {
-      const response = await fetch(`https://api.deezer.com/search?q=${query}`);
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error("Error fetching tracks", error);
+const useMusic = () => {
+  const search = async (query) => {
+    const result = await searchTracks(query);
+    if (result.error) {
+      console.error(result.error);
     }
+    return result;
   };
+
+  return { search };
+};
+
+export default useMusic;

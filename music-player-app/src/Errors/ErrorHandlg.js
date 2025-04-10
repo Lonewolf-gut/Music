@@ -1,16 +1,14 @@
+import { searchTracks } from "../utils/api";
 
+const handleSearchError = async (query) => {
+  const result = await searchTracks(query);
+  if (!result.data || result.data.length === 0) {
+    alert("No results found for this query.");
+  }
+  if (result.error) {
+    alert(result.error);
+  }
+  return result;
+};
 
-const searchTracks = async (query) => {
-    try {
-      const response = await fetch(`https://api.deezer.com/search?q=${query}`);
-      const data = await response.json();
-      if (!data.data || data.data.length === 0) {
-        alert("No results found for this query.");
-      }
-      return data;
-    } catch (error) {
-      console.error("Error fetching tracks", error);
-      alert("An error occurred while fetching the tracks.");
-    }
-  };
-  
+export default handleSearchError;
