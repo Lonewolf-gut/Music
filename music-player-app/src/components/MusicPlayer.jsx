@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from "react";
 
 const MusicPlayer = ({ track }) => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -17,7 +17,7 @@ const MusicPlayer = ({ track }) => {
 
   const handleSkip = () => {
     // skip to the next track (you may want to fetch the next track here)
-    alert('Skipping to the next track');
+    alert("Skipping to the next track");
   };
 
   const handleVolumeChange = (event) => {
@@ -40,16 +40,18 @@ const MusicPlayer = ({ track }) => {
     return () => clearInterval(interval);
   }, []);
 
-
-
   return (
     <div className="flex flex-col items-center bg-gray-800 text-white p-4 rounded-lg">
       {track ? (
         <>
-          <img src={track.album.cover_medium} alt={track.title} className="w-32 h-32 mb-4" />
+          <img
+            src={track.album.cover_medium}
+            alt={track.title}
+            className="w-32 h-32 mb-4"
+          />
           <p className="font-bold">{track.title}</p>
-          <p className='text-sm'>{track.artist.name}</p>
-          <p className='text-xs text-gray-400'>{track.artist.title}</p>
+          <p className="text-sm">{track.artist.name}</p>
+          <p className="text-xs text-gray-400">{track.artist.title}</p>
 
           <audio
             ref={audioRef}
@@ -60,20 +62,19 @@ const MusicPlayer = ({ track }) => {
             onTimeUpdate={() => setCurrentTime(audioRef.current.currentTime)}
             preload="auto"
           ></audio>
-  
+
           <div className="flex items-center mt-4">
-            <button 
-              onClick={togglePlay} 
+            <button
+              onClick={togglePlay}
               className="bg-blue-500 text-white p-2 rounded-full"
             >
-              {isPlaying ? 'Pause' : 'Play'}
+              {isPlaying ? "Pause" : "Play"}
             </button>
 
-            <button 
-              onClick={skipTrack} 
+            <button
+              onClick={handleSkip}
               className="bg-gray-500 p-2 ml-4 rounded-full"
             >
-
               Skip
             </button>
           </div>
